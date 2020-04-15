@@ -48,6 +48,7 @@ public class BasicSearch {
 
 	public static String hostGrid;
 	public static String portGrid;
+	public static Platform platformCible;
 	public static String baseUrl;
 
 	public static String adressZap;
@@ -76,7 +77,7 @@ public class BasicSearch {
 			prop.load(initialStreamGrid);
 			hostGrid = prop.getProperty("grid.host");
 			baseUrl = prop.getProperty("application.baseUrl");
-			portGrid = prop.getProperty("grid.port");
+			portGrid = prop.getProperty("grid.port");	
 			adressZap = prop.getProperty("zap.adresse");
 			portZap = Integer.parseInt(prop.getProperty("zap.port"));
 			apiKeyZap = prop.getProperty("zap.apikey");
@@ -94,21 +95,16 @@ public class BasicSearch {
 	@Before
 	public void setUp() throws MalformedURLException {
 		vars = new HashMap<String, Object>();
-		DesiredCapabilities caps = new DesiredCapabilities();
 		MutableCapabilities options;
 		isFirefox = FIREFOX.equalsIgnoreCase(browser);
 		if (isFirefox) {
-			caps.setBrowserName(browser);
-			caps.setPlatform(Platform.WINDOWS);
-			options = new FirefoxOptions(caps).setHeadless(this.isHeadless);
+			options = new FirefoxOptions().setHeadless(this.isHeadless);
 			if (this.isHeadless) {
 				LOGGER.atInfo().log("Branchement du proxy ZAP au test Firefox Headless");
 				((FirefoxOptions) options).setProxy(new Proxy().setHttpProxy(adressZap + ":" + portZap));
 			}
 		} else {
 			options = new ChromeOptions().setHeadless(this.isHeadless);
-			options.setCapability("browserName", browser);
-			options.setCapability("platformName", "Windows");
 		}
 		driver = new RemoteWebDriver(new URL("http://" + hostGrid + ":" + portGrid + "/wd/hub"), options);
 		driver.manage().window().maximize();
@@ -133,12 +129,11 @@ public class BasicSearch {
 	public void rechercheProduit() throws InterruptedException {
 		final String MOT_RECHERCHE = "Shirt";
 		driver.get(baseUrl);
-//		NavigationContext.changerLangueSite(driver, "Français");
 		driver.findElement(By.cssSelector(".mat-search_icon-search")).click();
 		attente.until(ExpectedConditions.elementToBeClickable(By.id("mat-input-0")));
 		driver.findElement(By.id("mat-input-0")).sendKeys(MOT_RECHERCHE, Keys.ENTER);
 		attente.until(ExpectedConditions.presenceOfElementLocated(By.id("searchValue")));
-		assertTrue("La page du resultat de la recherche ne sait pas chargée",
+		assertTrue("La page du resultat de la recherche ne sait pas chargee",
 				driver.findElement(By.xpath("//span[contains(.,'Search Results -')]")) != null);
 		assertTrue("Pas prise en compte du motif de la recherche",
 				MOT_RECHERCHE.equalsIgnoreCase(driver.findElement(By.id("searchValue")).getText()));
