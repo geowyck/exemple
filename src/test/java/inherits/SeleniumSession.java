@@ -20,7 +20,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.StackSize;
 
-import scenario.TestGridAndZap;
+import scenario.TestPicGrid;
 
 public class SeleniumSession
 {
@@ -87,7 +87,7 @@ public class SeleniumSession
         }
         else
         {
-            initialStreamGrid = TestGridAndZap.class.getResourceAsStream(resourceTests);
+            initialStreamGrid = TestPicGrid.class.getResourceAsStream(resourceTests);
         }
         if (initialStreamGrid != null)
         {
