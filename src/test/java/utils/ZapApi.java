@@ -58,7 +58,7 @@ public class ZapApi {
 	public static final String URL_ZAP_BY_PROXY = "http://zap";
 
 	/**
-	 * Méthode static pour lancer le spider de zap pre etape au scan de detection de
+	 * Mï¿½thode static pour lancer le spider de zap pre etape au scan de detection de
 	 * vulnerabilites
 	 * 
 	 * @param baseUrl   url de l application
@@ -73,7 +73,7 @@ public class ZapApi {
 		ClientApi api = new ClientApi(adressZap, portZap, apiKeyZap);
 		try {
 			ApiResponse resp = api.spider.scan(baseUrl, null, null, null, baseUrl);
-
+//api.spider.setOptionMaxDuration(i);
 			int progress = 0;
 			// compteur en minute
 			// Appel de l api pour avoir le numero de scan necessaire
@@ -93,7 +93,7 @@ public class ZapApi {
 	}
 
 	/**
-	 * Méthode static pour lancer le scan de zap pre etape au scan de detection de
+	 * Mï¿½thode static pour lancer le scan de zap pre etape au scan de detection de
 	 * vulnerabilites
 	 * 
 	 * @param baseUrl   url de l application
@@ -105,7 +105,7 @@ public class ZapApi {
 	 */
 	public static String runScan(String baseUrl, int portZap, String adressZap, String apiKeyZap) {
 		// numero de scan pour avoir l avancee de celui ci
-		// initialisation à une valeur non compris dans la numerotation des scans plage
+		// initialisation ï¿½ une valeur non compris dans la numerotation des scans plage
 		// de valeurs commencant par 0
 		String scanid = "-1";
 		// indicateur de progression du scan
@@ -125,8 +125,7 @@ public class ZapApi {
 				LOGGER_ZAP.at(Level.INFO).log("Progression du scan: " + progress);
 			}
 		} catch (ClientApiException | InterruptedException e) {
-			LOGGER_ZAP.at(Level.WARNING)
-					.log("Probleme de connexion avec Zap (feature ascan). Merci de contacter le support.", e);
+			LOGGER_ZAP.atWarning().withStackTrace(StackSize.FULL);
 			// LOGGER.error("Probleme de connexion avec Zap (feature scan). Merci de
 			// contacter le support.", e);
 		}
@@ -134,7 +133,7 @@ public class ZapApi {
 	}
 
 	/**
-	 * Méthode static pour obtenir la liste des vulnerabilites applicatives
+	 * Mï¿½thode static pour obtenir la liste des vulnerabilites applicatives
 	 * 
 	 * @param baseUrl   url de l application
 	 * @param adressZap adresse de l instance du demon zap

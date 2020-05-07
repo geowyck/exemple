@@ -7,6 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<description>Jar de tests de l element ZAP de la PIC </description>
 	<properties>
+	<sonar.host.url>http://sonarqube.soda.appli.dgfip/</sonar.host.url>
 		<failsafe.rerunFailingTestsCount>
 			2</failsafe.rerunFailingTestsCount>
 	</properties>
@@ -19,7 +20,7 @@
 				<version>2.22.2</version>
 				<configuration>
 					<includes>
-						<include>**/BasicSearch.java</include>
+						<include>**/TestGridAndZap.java</include>
 					</includes>
 				</configuration>
 				<executions>
