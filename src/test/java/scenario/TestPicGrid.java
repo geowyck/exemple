@@ -36,6 +36,11 @@ public class TestPicGrid extends SeleniumSession
 {
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
+    static
+    {
+        activateZap = false;
+    }
+
     private WebDriverWait attente;
 
     JavascriptExecutor js;

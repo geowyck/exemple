@@ -24,6 +24,8 @@ import scenario.TestPicGrid;
 
 public class SeleniumSession
 {
+    protected static boolean activateZap = true;
+
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
     protected final static String FIREFOX = "firefox";
@@ -108,7 +110,11 @@ public class SeleniumSession
         if (isFirefox)
         {
             options = new FirefoxOptions().setHeadless(IS_HEADLESS);
-            ((FirefoxOptions) options).setProxy(new Proxy().setHttpProxy(adressZap + ":" + portZap));
+            if (activateZap)
+            {
+                ((FirefoxOptions) options).setProxy(new Proxy().setHttpProxy(adressZap + ":" + portZap));
+            }
+
         }
         else
         {
