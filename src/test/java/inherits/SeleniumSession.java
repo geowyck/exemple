@@ -24,7 +24,7 @@ import scenario.TestPicGrid;
 
 public class SeleniumSession
 {
-    protected static boolean activateZap = true;
+    protected static boolean activateZap;
 
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
