@@ -1,0 +1,6 @@
+grid.host=selenium.soda.appli.dgfip
+grid.port=4444
+application.baseUrl=http://shop.juice.owasp:3000
+zap.adresse=zap.soda.appli.dgfip
+zap.port=7777
+zap.apikey=ZAPROXYPLUGIN
