@@ -6,8 +6,6 @@ import static api.ZapApi.runScan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +15,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -76,9 +72,10 @@ public class TestJuiceShop extends SeleniumSession
         LOGGER.atInfo().log("Lancement de ZAP:");
         runScan(baseUrl, portZap, adressZap, apiKeyZap);
         getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
-        getReport(baseUrl, portZap, adressZap, apiKeyZap);
+        getReport(baseUrl, portZap, adressZap, apiKeyZap, "juiceshop");
     }
 
+    @Ignore
     @Test
     public void rechercheProduit()
     {

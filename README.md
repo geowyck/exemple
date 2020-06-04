@@ -5,7 +5,7 @@ Pour configurer un fichier de properties particulier, il faut valoriser la varia
 
 **selenium.properties.filename**
 
-Par défaut, il est valoriser à *local.selenium.properties*, fichier à mettre sous test/ressources pour un projet avec un archetype Maven.
+Par défaut, il est valoriser à *pf3.selenium.properties*, fichier à mettre sous test/ressources pour un projet avec un archetype Maven.
 
 
 

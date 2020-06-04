@@ -1,7 +1,8 @@
 package scenario;
 
-import static api.ZapApi.*;
-import static org.junit.Assert.assertEquals;
+import static api.ZapApi.getDetectedAlerts;
+import static api.ZapApi.getReport;
+import static api.ZapApi.runScan;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -13,18 +14,14 @@ import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.google.common.flogger.FluentLogger;
@@ -87,7 +84,7 @@ public class TestPicSeleniumZap extends SeleniumSession
         LOGGER.atInfo().log("Lancement de ZAP:");
         runScan(baseUrl, portZap, adressZap, apiKeyZap);
         getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
-        getReport(baseUrl, portZap, adressZap, apiKeyZap);
+        getReport(baseUrl, portZap, adressZap, apiKeyZap,"selenium");
     }
 
     @Test
