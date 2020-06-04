@@ -1,4 +1,4 @@
-package utils;
+package api;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -157,8 +157,6 @@ public class ZapApi {
 					.setParameter("baseUrl", baseUrl).setParameter("recurse", "true").setParameter("apikey", apiKey)
 					.build();
 			HttpGet requete = new HttpGet(uri);
-//			HttpGet requete = new HttpGet(
-//					URL_ZAP_BY_PROXY + "/XML/alert/view/alerts/?baseurl=" + baseUrl + "/&start=&count=&riskId=");
 			TimeUnit.SECONDS.sleep(attente);
 			try (CloseableHttpResponse reponse = httpclient.execute(requete)) {
 				htmlAlerts = EntityUtils.toString(reponse.getEntity(), StandardCharsets.UTF_8);

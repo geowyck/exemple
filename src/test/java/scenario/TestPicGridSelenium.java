@@ -25,7 +25,7 @@ import com.google.common.flogger.FluentLogger;
 import inherits.SeleniumSession;
 
 @RunWith(Parameterized.class)
-public class TestPicGrid extends SeleniumSession {
+public class TestPicGridSelenium extends SeleniumSession {
 	private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
 	static {
@@ -39,7 +39,7 @@ public class TestPicGrid extends SeleniumSession {
 
 	private Map<String, Object> vars;
 
-	public TestPicGrid(String browser) {
+	public TestPicGridSelenium(String browser) {
 		super(browser);
 		this.browser = browser;
 	}

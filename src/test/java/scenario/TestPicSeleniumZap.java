@@ -1,6 +1,6 @@
 package scenario;
 
-import static utils.ZapApi.*;
+import static api.ZapApi.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -31,7 +31,7 @@ import com.google.common.flogger.FluentLogger;
 import inherits.SeleniumSession;
 
 @RunWith(Parameterized.class)
-public class TestPicZap extends SeleniumSession {
+public class TestPicSeleniumZap extends SeleniumSession {
 	static {
 		activateZap = true;
 	}
@@ -43,7 +43,7 @@ public class TestPicZap extends SeleniumSession {
 
 	private Map<String, Object> vars;
 
-	public TestPicZap(String browser) {
+	public TestPicSeleniumZap(String browser) {
 		super(browser);
 		this.browser = browser;
 	}
