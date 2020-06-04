@@ -26,6 +26,7 @@
         <version>${version.surefire}</version>
         <configuration>
           <excludes>
+            <exclude>"**/TestJuiceShop.java"</exclude>
             <exclude>${test.integration}</exclude>
           </excludes>
         </configuration>
@@ -38,6 +39,9 @@
           <includes>
             <include>${test.integration}</include>
           </includes>
+          <excludes>
+            <exclude>"**/TestJuiceShop.java"</exclude>
+          </excludes>
         </configuration>
         <executions>
           <execution>

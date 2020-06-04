@@ -32,86 +32,69 @@ import com.google.common.flogger.FluentLogger;
 import inherits.SeleniumSession;
 
 @RunWith(Parameterized.class)
-public class TestPicSeleniumZap extends SeleniumSession {
-	static {
-		activateZap = true;
-	}
-	private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
+public class TestPicSeleniumZap extends SeleniumSession
+{
+    static
+    {
+        activateZap = true;
+    }
 
-	private WebDriverWait attente;
+    private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
-	JavascriptExecutor js;
+    private WebDriverWait attente;
 
-	private Map<String, Object> vars;
+    JavascriptExecutor js;
 
-	public TestPicSeleniumZap(String browser) {
-		super(browser);
-		this.browser = browser;
-	}
+    private Map<String, Object> vars;
 
-	@Parameters
-	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { FIREFOX }, { CHROME } });
-	}
+    public TestPicSeleniumZap(String browser)
+    {
+        super(browser);
+        this.browser = browser;
+    }
 
-	@Before
-	public void setUp() {
-		vars = new HashMap<String, Object>();
-		driver.manage().window().maximize();
-		js = (JavascriptExecutor) driver;
-		attente = new WebDriverWait(driver, 30);
-	}
+    @Parameters
+    public static Collection<Object[]> data()
+    {
+        return Arrays.asList(new Object[][] {{FIREFOX}, {CHROME}});
+    }
 
-	@After
-	public void tearDown() {
-		List<LogEntry> logEntries = driver.manage().logs().get(LogType.SERVER).getAll();
-		List<String> logMessages = logEntries.stream().map(logEntry -> logEntry.toString())
-				.collect(Collectors.toList());
-		for (String string : logMessages) {
-			LOGGER.atInfo().log(string);
-		}
-		driver.quit();
-	}
+    @Before
+    public void setUp()
+    {
+        vars = new HashMap<String, Object>();
+        driver.manage().window().maximize();
+        js = (JavascriptExecutor) driver;
+        attente = new WebDriverWait(driver, 30);
+    }
 
-	@AfterClass
-	public static void analyseZap() {
-		LOGGER.atInfo().log("Lancement de ZAP:");
-		runScan(baseUrl, portZap, adressZap, apiKeyZap);
-		getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
-		getReport(baseUrl, portZap, adressZap, apiKeyZap);
-	}
+    @After
+    public void tearDown()
+    {
+        List<LogEntry> logEntries = driver.manage().logs().get(LogType.SERVER).getAll();
+        List<String> logMessages = logEntries.stream().map(logEntry -> logEntry.toString())
+            .collect(Collectors.toList());
+        for (String string : logMessages)
+        {
+            LOGGER.atInfo().log(string);
+        }
+        driver.quit();
+    }
 
-	@Test
-	public void rechercheProduit() {
-		if (baseUrl.contains("juice")) {
-		final String MOT_RECHERCHE = "Shirt";
-		driver.get(baseUrl);
-		attente.until(ExpectedConditions.titleIs("OWASP Juice Shop"));
-		if (driver.findElement(By.xpath("//button[@aria-label=\"Close Welcome Banner\"]")) != null) {
-			driver.findElement(By.xpath("//button[@aria-label=\"Close Welcome Banner\"]")).click();
-		}
-		driver.findElement(By.cssSelector(".mat-search_icon-search")).click();
-		attente.until(ExpectedConditions.elementToBeClickable(By.id("mat-input-0")));
-		driver.findElement(By.id("mat-input-0")).sendKeys(MOT_RECHERCHE, Keys.ENTER);
-		attente.until(ExpectedConditions.presenceOfElementLocated(By.id("searchValue")));
-		assertTrue("La page du resultat de la recherche ne sait pas chargee",
-				driver.findElement(By.xpath("//span[contains(.,'Search Results -')]")) != null);
-		assertTrue("Pas prise en compte du motif de la recherche",
-				MOT_RECHERCHE.equalsIgnoreCase(driver.findElement(By.id("searchValue")).getText()));
-		vars.put("nbArticleRecherche",
-				driver.findElements(
-						By.xpath("//figure//div[@class='item-name' and contains(text(),'" + MOT_RECHERCHE + "')]"))
-						.size());
-		assertEquals(vars.get("nbArticleRecherche").toString(), "2");
-		} else {
-			Assume.assumeTrue("Juice shop non deployer", true);
-		}
-	}
-	
-	@Test
-	public void analysePageAuthentifTestLink() {
-		driver.get(baseUrl);
-		assertTrue(driver.getTitle() != null);
-		assertTrue(driver.getTitle().contains("testlink"));
-	}
+    @AfterClass
+    public static void analyseZap()
+    {
+        LOGGER.atInfo().log("Lancement de ZAP:");
+        runScan(baseUrl, portZap, adressZap, apiKeyZap);
+        getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
+        getReport(baseUrl, portZap, adressZap, apiKeyZap);
+    }
+
+    @Test
+    public void analysePageAuthentifTestLink()
+    {
+        driver.get(baseUrl);
+        assertTrue(driver.getTitle() != null);
+        assertTrue(driver.getTitle().contains("testlink"));
+    }
 }

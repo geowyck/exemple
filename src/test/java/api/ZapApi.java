@@ -70,6 +70,8 @@ public class ZapApi {
 	 */
 	public static String runSpider(String baseUrl, int portZap, String adressZap, String apiKeyZap) {
 		String scanid = "-1";
+//		if ("".equals(apiKeyZap))
+//		    apiKeyZap = null;
 		ClientApi api = new ClientApi(adressZap, portZap, apiKeyZap);
 		try {
 			ApiResponse resp = api.spider.scan(baseUrl, null, null, null, baseUrl);
@@ -86,8 +88,8 @@ public class ZapApi {
 				LOGGER_ZAP.at(Level.INFO).log("Progression de l'indexation en pourcentage: %s", progress);
 			}
 		} catch (ClientApiException | InterruptedException e) {
-			LOGGER_ZAP.at(Level.WARNING)
-					.log("Probleme de connexion avec Zap (feature spider). Merci de contacter le support.", e);
+			LOGGER_ZAP.atWarning().withStackTrace(StackSize.FULL)
+					.log("Probleme de connexion avec Zap (feature spider). Merci de contacter le support.");
 		}
 		return scanid;
 	}

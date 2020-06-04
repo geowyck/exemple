@@ -33,6 +33,9 @@ public class DataContext extends KeysProperties {
 	public static int portZap;
 
 	public static String apiKeyZap;
+	
+	public static String versionFirefox;
+	public static String versionChrome;
 
 	static {
 		try {
@@ -72,6 +75,8 @@ public class DataContext extends KeysProperties {
 			portZap = Integer.parseInt(prop.getProperty(keyPortZap, "6666"));
 			// on valorise par défaut sans Key pour accéder à l'API
 			apiKeyZap = prop.getProperty(keyApikeyZap, "");
+			versionFirefox=prop.getProperty(keyFirefoxVersion, "");
+			versionChrome=prop.getProperty(keyChromeVersion, "");
 		}
 
 	}
