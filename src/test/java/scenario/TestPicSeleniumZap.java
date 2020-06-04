@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,6 +83,7 @@ public class TestPicSeleniumZap extends SeleniumSession {
 
 	@Test
 	public void rechercheProduit() {
+		if (baseUrl.contains("juice")) {
 		final String MOT_RECHERCHE = "Shirt";
 		driver.get(baseUrl);
 		attente.until(ExpectedConditions.titleIs("OWASP Juice Shop"));
@@ -101,5 +103,15 @@ public class TestPicSeleniumZap extends SeleniumSession {
 						By.xpath("//figure//div[@class='item-name' and contains(text(),'" + MOT_RECHERCHE + "')]"))
 						.size());
 		assertEquals(vars.get("nbArticleRecherche").toString(), "2");
+		} else {
+			Assume.assumeTrue("Juice shop non deployer", true);
+		}
+	}
+	
+	@Test
+	public void analysePageAuthentifTestLink() {
+		driver.get(baseUrl);
+		assertTrue(driver.getTitle() != null);
+		assertTrue(driver.getTitle().contains("testlink"));
 	}
 }
