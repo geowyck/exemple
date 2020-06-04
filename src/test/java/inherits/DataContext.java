@@ -53,7 +53,7 @@ public class DataContext extends KeysProperties {
 		Properties prop = new Properties();
 		InputStream initialStreamGrid;
 		final String resourceTests = "/" + filename;
-		LOGGER.atInfo().log("Fichier de configuration injecte: ", filename);
+		LOGGER.atInfo().log("Fichier de configuration injecte: %s", filename);
 		File fileProperties = new File(filename);
 		if (fileProperties.exists()) {
 			initialStreamGrid = new FileInputStream(fileProperties);
