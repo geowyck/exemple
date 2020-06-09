@@ -25,6 +25,7 @@ import com.google.common.flogger.FluentLogger;
 
 import inherits.SeleniumSession;
 import utils.EncodeDecode;
+import utils.UrlContext;
 
 @RunWith(Parameterized.class)
 public class TestPicGridSelenium extends SeleniumSession
@@ -89,7 +90,9 @@ public class TestPicGridSelenium extends SeleniumSession
         {
             ipOrVirtualHost = new String(hostGrid);
         }
-        driver.get("http://" + ipOrVirtualHost + ":" + portGrid + "/grid/console");
+        LOGGER.atInfo().log("host: %s", ipOrVirtualHost);
+        URL url = UrlContext.getUrlGrid(ipOrVirtualHost, portGrid, "/grid/console");
+        driver.get(url.toString());
         {
             List<WebElement> elements = driver.findElements(By.xpath("//img[contains(@src,'firefox.png')]"));
             assert (elements.size() > 0);

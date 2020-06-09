@@ -1,6 +1,5 @@
 package inherits;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.openqa.selenium.MutableCapabilities;
@@ -11,12 +10,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
-import com.google.common.flogger.FluentLogger;
-import com.google.common.flogger.StackSize;
+import utils.UrlContext;
 
 public class SeleniumSession extends DataContext
 {
-    private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
     protected static boolean activateZap;
 
@@ -24,7 +21,7 @@ public class SeleniumSession extends DataContext
 
     protected final static String CHROME = "chromium";
 
-    public static final boolean IS_HEADLESS_DEFAULT = true;
+    public static boolean IS_HEADLESS_DEFAULT = false;
 
     protected String browser;
 
@@ -41,6 +38,7 @@ public class SeleniumSession extends DataContext
         isFirefox = FIREFOX.equalsIgnoreCase(browser);
         if (isFirefox)
         {
+            IS_HEADLESS_DEFAULT = true;
             options = new FirefoxOptions().setHeadless(IS_HEADLESS_DEFAULT);
             if (activateZap)
             {
@@ -52,15 +50,8 @@ public class SeleniumSession extends DataContext
         {
             options = new ChromeOptions().setHeadless(IS_HEADLESS_DEFAULT);
         }
-        try
-        {
-            webDriver = new RemoteWebDriver(new URL("http://" + hostGrid + ":" + portGrid + "/wd/hub"), options);
-        }
-        catch (MalformedURLException e)
-        {
-            LOGGER.atWarning().withStackTrace(StackSize.FULL).log("URL du grid sollicite: host %s port %s", hostGrid,
-                portGrid);
-        }
+        URL url = UrlContext.getUrlGrid(hostGrid, portGrid, "/wd/hub");
+        webDriver = new RemoteWebDriver(url, options);
         ListenerSelenium listener = new ListenerSelenium();
         driver = new EventFiringWebDriver(webDriver);
         driver.register(listener);
@@ -73,16 +64,8 @@ public class SeleniumSession extends DataContext
         {
             ((FirefoxOptions) options).setProxy(new Proxy().setHttpProxy(adressZap + ":" + portZap));
         }
-
-        try
-        {
-            webDriver = new RemoteWebDriver(new URL("http://" + hostGrid + ":" + portGrid + "/wd/hub"), options);
-        }
-        catch (MalformedURLException e)
-        {
-            LOGGER.atWarning().withStackTrace(StackSize.FULL).log("URL du grid sollicite: host %s port %s", hostGrid,
-                portGrid);
-        }
+        URL url = UrlContext.getUrlGrid(hostGrid, portGrid, "/wd/hub");
+        webDriver = new RemoteWebDriver(url, options);
         ListenerSelenium listener = new ListenerSelenium();
         driver = new EventFiringWebDriver(webDriver);
         driver.register(listener);

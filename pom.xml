@@ -8,7 +8,7 @@
   <properties>
     <sonar.host.url>http://sonarqube.soda.appli.dgfip/</sonar.host.url>
     <failsafe.rerunFailingTestsCount>
-      2</failsafe.rerunFailingTestsCount>
+  2</failsafe.rerunFailingTestsCount>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <test.integration>**/TestPic**</test.integration>
     <version.surefire>2.22.2</version.surefire>

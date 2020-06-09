@@ -38,10 +38,12 @@ public class TestPicSeleniumZap extends SeleniumSession
 
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
+    @SuppressWarnings("unused")
     private WebDriverWait attente;
 
     JavascriptExecutor js;
 
+    @SuppressWarnings("unused")
     private Map<String, Object> vars;
 
     public TestPicSeleniumZap(String browser)
@@ -84,7 +86,7 @@ public class TestPicSeleniumZap extends SeleniumSession
         LOGGER.atInfo().log("Lancement de ZAP:");
         runScan(baseUrl, portZap, adressZap, apiKeyZap);
         getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
-        getReport(baseUrl, portZap, adressZap, apiKeyZap,"selenium");
+        getReport(baseUrl, portZap, adressZap, apiKeyZap);
     }
 
     @Test
@@ -92,6 +94,6 @@ public class TestPicSeleniumZap extends SeleniumSession
     {
         driver.get(baseUrl);
         assertTrue(driver.getTitle() != null);
-        assertTrue(driver.getTitle().contains("testlink"));
+        assertTrue(driver.getTitle().toLowerCase().contains("login"));
     }
 }

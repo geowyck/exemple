@@ -15,11 +15,12 @@ public class TestPicAloneZap extends DataContext
     @Test
     public void analyseZapAlone()
     {
+        ZapApi.debug = true;
         LOGGER.atInfo().log("Lancement de ZAP: %s ; %s ; %s ; %s", baseUrl, portZap, adressZap, apiKeyZap);
         ZapApi.runSpider(baseUrl, portZap, adressZap, apiKeyZap);
-        String runScan = ZapApi.runScan(baseUrl, portZap, adressZap, apiKeyZap);
-        LOGGER.atInfo().log("Result scan: %s", runScan);
-        ZapApi.getReport(baseUrl, portZap, adressZap, apiKeyZap,"alone");
+        String idScan = ZapApi.runScan(baseUrl, portZap, adressZap, apiKeyZap);
+        LOGGER.atInfo().log("Scan numero: %s", idScan);
+        ZapApi.getReport(baseUrl, portZap, adressZap, apiKeyZap);
     }
 
 }

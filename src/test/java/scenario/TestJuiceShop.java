@@ -72,9 +72,12 @@ public class TestJuiceShop extends SeleniumSession
         LOGGER.atInfo().log("Lancement de ZAP:");
         runScan(baseUrl, portZap, adressZap, apiKeyZap);
         getDetectedAlerts(apiKeyZap, portZap, adressZap, apiKeyZap);
-        getReport(baseUrl, portZap, adressZap, apiKeyZap, "juiceshop");
+        getReport(baseUrl, portZap, adressZap, apiKeyZap);
     }
 
+    /**
+     * DOCUMENTEZ_MOI
+     */
     @Ignore
     @Test
     public void rechercheProduit()
@@ -82,6 +85,7 @@ public class TestJuiceShop extends SeleniumSession
         if (baseUrl.contains("juice"))
         {
             final String MOT_RECHERCHE = "Shirt";
+            final String NB_ARTICLE_ATTENDU = "2";
             driver.get(baseUrl);
             attente.until(ExpectedConditions.titleIs("OWASP Juice Shop"));
             if (driver.findElement(By.xpath("//button[@aria-label=\"Close Welcome Banner\"]")) != null)
@@ -100,7 +104,7 @@ public class TestJuiceShop extends SeleniumSession
                 driver.findElements(
                     By.xpath("//figure//div[@class='item-name' and contains(text(),'" + MOT_RECHERCHE + "')]"))
                     .size());
-            assertEquals(vars.get("nbArticleRecherche").toString(), "2");
+            assertEquals(vars.get("nbArticleRecherche").toString(), NB_ARTICLE_ATTENDU);
         }
         else
         {

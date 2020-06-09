@@ -19,7 +19,7 @@ public class DataContext extends KeysProperties
 
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
-    private static final String DOMAINE = "nubo";
+    private static boolean IS_NUBO = false;
 
     public static String hostGrid;
 
@@ -75,11 +75,15 @@ public class DataContext extends KeysProperties
         }
         if (initialStreamGrid != null)
         {
+            if (filename.contains("nubo"))
+            {
+                IS_NUBO = true;
+            }
             prop.load(initialStreamGrid);
             hostGrid = prop.getProperty(keyHostGridSelenium, "localhost");
             portGrid = prop.getProperty(keyPortGridSelenium, "4444");
             baseUrl = prop.getProperty(keyBaseUrl, "http://localhost:8080");
-            if (filename.contains(DOMAINE))
+            if (IS_NUBO)
             {
                 baseUrl = EncodeDecode.decode(baseUrl);
             }

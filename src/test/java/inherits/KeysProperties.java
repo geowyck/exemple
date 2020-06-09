@@ -19,4 +19,5 @@ public class KeysProperties
     protected final static String keyFirefoxVersion = "selenium.firefox.version";
 
     protected final static String keyChromeVersion = "selenium.chrome.version";
+
 }

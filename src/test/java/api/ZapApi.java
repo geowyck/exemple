@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -24,6 +25,8 @@ import org.zaproxy.clientapi.core.ClientApiException;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.StackSize;
 
+import utils.Resources;
+
 public class ZapApi
 {
     /**
@@ -34,7 +37,7 @@ public class ZapApi
     /**
      * Constante pour controler l avancee du spider
      */
-    static final int DEMI_MINUTE = 30000;
+    static final int DEMI_MINUTE = 30;
 
     /**
      * Constante pour augmenter la temporisation lors du scan
@@ -46,17 +49,12 @@ public class ZapApi
      */
     private static final FluentLogger LOGGER_ZAP = FluentLogger.forEnclosingClass();;
 
-    // static final Logger LOGGER = LoggerFactory.getLogger(ZapCall.class);
-
-    /**
-     * chemin du rapport Zap
-     */
-    public static final String PATH_ZAP = "./target/rapport";
-
     /**
      * Url de zap API pour solliciter le service
      */
     public static final String URL_ZAP_BY_PROXY = "http://zap";
+
+    public static boolean debug = false;
 
     /**
      * M�thode static pour lancer le spider de zap pre etape au scan de detection de vulnerabilites
@@ -70,7 +68,7 @@ public class ZapApi
     public static String runSpider(String baseUrl, int portZap, String adressZap, String apiKeyZap)
     {
         String scanid = "-1";
-        ClientApi api = new ClientApi(adressZap, portZap, apiKeyZap);
+        ClientApi api = new ClientApi(adressZap, portZap, apiKeyZap, debug);
         try
         {
             ApiResponse resp = api.spider.scan(baseUrl, null, null, null, baseUrl);
@@ -83,7 +81,7 @@ public class ZapApi
             // On boucle tant que le spider n est pas termine
             while ((progress < CENT_POURCENT))
             {
-                Thread.sleep(DEMI_MINUTE);
+                TimeUnit.SECONDS.sleep((long) DEMI_MINUTE);
                 progress = Integer.parseInt(((ApiResponseElement) api.spider.status(scanid)).getValue());
                 LOGGER_ZAP.at(Level.INFO).log("Progression de l'indexation en pourcentage: %s", progress);
             }
@@ -125,7 +123,7 @@ public class ZapApi
             LOGGER_ZAP.at(Level.INFO).log("Scan actif pour %s ayant pour identifiant interne: %s", baseUrl, scanid);
             while (progress < CENT_POURCENT)
             {
-                Thread.sleep((long) MUTLI * DEMI_MINUTE);
+                TimeUnit.SECONDS.sleep((long) MUTLI * DEMI_MINUTE);
                 progress = Integer.parseInt(((ApiResponseElement) api.ascan.status(scanid)).getValue());
                 LOGGER_ZAP.at(Level.INFO).log("Progression du scan: " + progress);
             }
@@ -186,17 +184,28 @@ public class ZapApi
         return htmlAlerts;
     }
 
-    public static void getReport(String baseUrl, int portZap, String adressZap, String apiKeyZap,String precisionRapport)
+    public static void getReport(String baseUrl, int portZap, String adressZap, String apiKeyZap)
     {
         ClientApi api = new ClientApi(adressZap, portZap, apiKeyZap);
-        try (FileWriter fic = new FileWriter(new File("target", "zap_"+precisionRapport+".html")))
+        LocalDateTime localDateTime = LocalDateTime.now();
+        File file = Resources.getFile("zap", localDateTime, false, "html");
+        byte[] bytes = null;
+        try (FileWriter fic = new FileWriter(file))
         {
-            byte[] bytes = api.core.htmlreport();
+            bytes = api.core.htmlreport();
             fic.write(new String(bytes));
         }
         catch (ClientApiException | IOException e)
         {
-            LOGGER_ZAP.atSevere().withStackTrace(StackSize.FULL);
+            LOGGER_ZAP.atSevere().withStackTrace(StackSize.FULL).withCause(e).log("Problème de génération du rapport");
+        }
+        finally
+        {
+            if (bytes == null || bytes.length == 0)
+            {
+                LOGGER_ZAP.atWarning().log("Fichier vide %s: suppression", file);
+                file.deleteOnExit();
+            }
         }
     }
 
