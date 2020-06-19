@@ -184,7 +184,8 @@ public class ListenerSelenium implements WebDriverEventListener
         screenshooter = (TakesScreenshot) driver;
         LocalDateTime localDateTime = LocalDateTime.now();
         String filename = throwable.getClass().getSimpleName();
-        LOGGER.atInfo().log("Exception levée voir la capture d ecran et code source de type %s a %s", filename, localDateTime);
+        LOGGER.atInfo().log("Exception levée voir la capture d ecran (si disponible) et code source de type %s a %s", filename,
+            localDateTime);
         LOGGER.atSevere().withStackTrace(StackSize.FULL).withCause(throwable);
         Resources.createScreen(screenshooter, Resources.getFile(filename, localDateTime, true, "png"));
         Resources.createPageSource(driver.getPageSource(), Resources.getFile(filename, localDateTime, true, "html"));
