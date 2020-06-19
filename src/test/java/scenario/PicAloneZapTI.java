@@ -7,7 +7,7 @@ import com.google.common.flogger.FluentLogger;
 import api.ZapApi;
 import inherits.DataContext;
 
-public class TestPicAloneZap extends DataContext
+public class PicAloneZapTI extends DataContext
 {
 
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();

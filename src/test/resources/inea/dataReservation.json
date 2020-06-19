@@ -1,0 +1,15 @@
+[
+  {
+  "voyageur":"Benjamin Joanne",
+  "profilVoyageur":"26-59 ans",
+    "departLieu": "paris",
+    "retourLieu": "lille",
+"departJour": "05/11/2018",
+"retourJour": "06/11/2018",
+"departHeure": "08h",
+"departHeureKO": "10h",
+"retourHeure":"18h",
+"departGare":"Paris Gare du Nord (Paris)",
+"retourGare":"Lille Europe (Lille)"
+}
+]

@@ -29,7 +29,7 @@ import com.google.common.flogger.FluentLogger;
 import inherits.SeleniumSession;
 
 @RunWith(Parameterized.class)
-public class TestPicSeleniumZap extends SeleniumSession
+public class PicSeleniumZapTI extends SeleniumSession
 {
     static
     {
@@ -46,7 +46,7 @@ public class TestPicSeleniumZap extends SeleniumSession
     @SuppressWarnings("unused")
     private Map<String, Object> vars;
 
-    public TestPicSeleniumZap(String browser)
+    public PicSeleniumZapTI(String browser)
     {
         super(browser);
         this.browser = browser;

@@ -28,7 +28,7 @@ import utils.EncodeDecode;
 import utils.UrlContext;
 
 @RunWith(Parameterized.class)
-public class TestPicGridSelenium extends SeleniumSession
+public class PicGridSeleniumTI extends SeleniumSession
 {
     private static final FluentLogger LOGGER = FluentLogger.forEnclosingClass();
 
@@ -44,7 +44,7 @@ public class TestPicGridSelenium extends SeleniumSession
 
     private Map<String, Object> vars;
 
-    public TestPicGridSelenium(String browser)
+    public PicGridSeleniumTI(String browser)
     {
         super(browser);
         this.browser = browser;

@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.StackSize;
 
 import utils.Resources;
 
@@ -120,14 +121,19 @@ public class ListenerSelenium implements WebDriverEventListener
     public void beforeClickOn(WebElement element, WebDriver driver)
     {
         // TODO Auto-generated method stub
-
+        // screenshooter = (TakesScreenshot) driver;
+        // LocalDateTime localDateTime = LocalDateTime.now();
+        // Resources.createScreen(screenshooter, Resources.getFile("beforeClick", localDateTime, true, "png"));
+        // Resources.createPageSource(driver.getPageSource(), Resources.getFile("beforeclick", localDateTime, true, "html"));
     }
 
     @Override
     public void afterClickOn(WebElement element, WebDriver driver)
     {
         // TODO Auto-generated method stub
-
+        // screenshooter = (TakesScreenshot) driver;
+        // LocalDateTime localDateTime = LocalDateTime.now();
+        // Resources.createScreen(screenshooter, Resources.getFile("afterclick", localDateTime, true, "png"));
     }
 
     @Override
@@ -178,7 +184,8 @@ public class ListenerSelenium implements WebDriverEventListener
         screenshooter = (TakesScreenshot) driver;
         LocalDateTime localDateTime = LocalDateTime.now();
         String filename = throwable.getClass().getSimpleName();
-        LOGGER.atInfo().log("Exception levée voir les fichiers %s", filename);
+        LOGGER.atInfo().log("Exception levée voir la capture d ecran et code source de type %s a %s", filename, localDateTime);
+        LOGGER.atSevere().withStackTrace(StackSize.FULL).withCause(throwable);
         Resources.createScreen(screenshooter, Resources.getFile(filename, localDateTime, true, "png"));
         Resources.createPageSource(driver.getPageSource(), Resources.getFile(filename, localDateTime, true, "html"));
     }

@@ -10,6 +10,8 @@ public class KeysProperties
 
     protected final static String keyBaseUrl = "application.baseUrl";
 
+    protected final static String keyBaseUrlInea = "application.baseUrl.inea";
+
     protected final static String keyHostZap = "zap.adresse";
 
     protected final static String keyPortZap = "zap.port";

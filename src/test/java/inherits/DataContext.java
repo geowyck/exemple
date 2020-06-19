@@ -11,7 +11,6 @@ import org.openqa.selenium.Platform;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.StackSize;
 
-import scenario.TestPicGridSelenium;
 import utils.EncodeDecode;
 
 public class DataContext extends KeysProperties
@@ -28,6 +27,8 @@ public class DataContext extends KeysProperties
     public static Platform platformCible;
 
     public static String baseUrl;
+
+    public static String baseUrlInea;
 
     public static String adressZap;
 
@@ -71,7 +72,7 @@ public class DataContext extends KeysProperties
         }
         else
         {
-            initialStreamGrid = TestPicGridSelenium.class.getResourceAsStream(resourceTests);
+            initialStreamGrid = DataContext.class.getResourceAsStream(resourceTests);
         }
         if (initialStreamGrid != null)
         {
@@ -83,6 +84,7 @@ public class DataContext extends KeysProperties
             hostGrid = prop.getProperty(keyHostGridSelenium, "localhost");
             portGrid = prop.getProperty(keyPortGridSelenium, "4444");
             baseUrl = prop.getProperty(keyBaseUrl, "http://localhost:8080");
+            baseUrlInea = prop.getProperty(keyBaseUrlInea, "http://localhost:8080");
             if (IS_NUBO)
             {
                 baseUrl = EncodeDecode.decode(baseUrl);

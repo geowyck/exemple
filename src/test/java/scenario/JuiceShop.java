@@ -29,7 +29,7 @@ import com.google.common.flogger.FluentLogger;
 
 import inherits.SeleniumSession;
 
-public class TestJuiceShop extends SeleniumSession
+public class JuiceShop extends SeleniumSession
 {
     static
     {
